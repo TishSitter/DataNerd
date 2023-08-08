@@ -34,12 +34,18 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.stBar = new Syncfusion.Windows.Forms.Tools.StatusBarAdvPanel();
+            this.stBarTail = new Syncfusion.Windows.Forms.Tools.StatusBarAdvPanel();
             this.btnOpenLog = new System.Windows.Forms.Button();
             this.tbLogFilePath = new System.Windows.Forms.TextBox();
             this.btnToggleTailThread = new System.Windows.Forms.Button();
+            this.statusBarAdv1 = new Syncfusion.Windows.Forms.Tools.StatusBarAdv();
+            this.btnToggleDbService = new System.Windows.Forms.Button();
+            this.stBarDb = new Syncfusion.Windows.Forms.Tools.StatusBarAdvPanel();
             ((System.ComponentModel.ISupportInitialize)(this.comboDropDown1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.stBar)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.stBarTail)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.statusBarAdv1)).BeginInit();
+            this.statusBarAdv1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.stBarDb)).BeginInit();
             this.SuspendLayout();
             // 
             // comboDropDown1
@@ -84,15 +90,15 @@
             this.label4.Text = "Thanks for using DataNerd!";
             this.label4.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
-            // stBar
+            // stBarTail
             // 
-            this.stBar.BeforeTouchSize = new System.Drawing.Size(261, 26);
-            this.stBar.Location = new System.Drawing.Point(12, 240);
-            this.stBar.Margin = new System.Windows.Forms.Padding(0);
-            this.stBar.Name = "stBar";
-            this.stBar.Size = new System.Drawing.Size(261, 26);
-            this.stBar.TabIndex = 6;
-            this.stBar.Text = "Idle";
+            this.stBarTail.BeforeTouchSize = new System.Drawing.Size(149, 34);
+            this.stBarTail.Location = new System.Drawing.Point(249, 2);
+            this.stBarTail.Margin = new System.Windows.Forms.Padding(0);
+            this.stBarTail.Name = "stBarTail";
+            this.stBarTail.Size = new System.Drawing.Size(149, 34);
+            this.stBarTail.TabIndex = 6;
+            this.stBarTail.Text = "Idle";
             // 
             // btnOpenLog
             // 
@@ -114,23 +120,60 @@
             // 
             // btnToggleTailThread
             // 
-            this.btnToggleTailThread.Location = new System.Drawing.Point(276, 240);
+            this.btnToggleTailThread.Enabled = false;
+            this.btnToggleTailThread.Location = new System.Drawing.Point(200, 2);
             this.btnToggleTailThread.Name = "btnToggleTailThread";
-            this.btnToggleTailThread.Size = new System.Drawing.Size(135, 26);
+            this.btnToggleTailThread.Size = new System.Drawing.Size(47, 34);
             this.btnToggleTailThread.TabIndex = 9;
-            this.btnToggleTailThread.Text = "Start Tailing";
+            this.btnToggleTailThread.Text = "Start Tail";
             this.btnToggleTailThread.UseVisualStyleBackColor = true;
             this.btnToggleTailThread.Click += new System.EventHandler(this.btnToggleTailThread_Click);
             // 
-            // Form1
+            // statusBarAdv1
+            // 
+            this.statusBarAdv1.BeforeTouchSize = new System.Drawing.Size(423, 42);
+            this.statusBarAdv1.Border3DStyle = System.Windows.Forms.Border3DStyle.Flat;
+            this.statusBarAdv1.Controls.Add(this.btnToggleDbService);
+            this.statusBarAdv1.Controls.Add(this.stBarDb);
+            this.statusBarAdv1.Controls.Add(this.btnToggleTailThread);
+            this.statusBarAdv1.Controls.Add(this.stBarTail);
+            this.statusBarAdv1.CustomLayoutBounds = new System.Drawing.Rectangle(0, 0, 0, 0);
+            this.statusBarAdv1.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.statusBarAdv1.Location = new System.Drawing.Point(0, 236);
+            this.statusBarAdv1.Name = "statusBarAdv1";
+            this.statusBarAdv1.Padding = new System.Windows.Forms.Padding(3);
+            this.statusBarAdv1.Size = new System.Drawing.Size(423, 42);
+            this.statusBarAdv1.Spacing = new System.Drawing.Size(2, 2);
+            this.statusBarAdv1.TabIndex = 10;
+            // 
+            // btnToggleDbService
+            // 
+            this.btnToggleDbService.Location = new System.Drawing.Point(0, 2);
+            this.btnToggleDbService.Name = "btnToggleDbService";
+            this.btnToggleDbService.Size = new System.Drawing.Size(47, 34);
+            this.btnToggleDbService.TabIndex = 10;
+            this.btnToggleDbService.Text = "Start DB";
+            this.btnToggleDbService.UseVisualStyleBackColor = true;
+            this.btnToggleDbService.Click += new System.EventHandler(this.btnToggleDbService_Click);
+            // 
+            // stBarDb
+            // 
+            this.stBarDb.BeforeTouchSize = new System.Drawing.Size(149, 34);
+            this.stBarDb.Location = new System.Drawing.Point(49, 2);
+            this.stBarDb.Margin = new System.Windows.Forms.Padding(0);
+            this.stBarDb.Name = "stBarDb";
+            this.stBarDb.Size = new System.Drawing.Size(149, 34);
+            this.stBarDb.TabIndex = 7;
+            this.stBarDb.Text = "Idle";
+            // 
+            // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(423, 278);
-            this.Controls.Add(this.btnToggleTailThread);
+            this.Controls.Add(this.statusBarAdv1);
             this.Controls.Add(this.tbLogFilePath);
             this.Controls.Add(this.btnOpenLog);
-            this.Controls.Add(this.stBar);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
@@ -139,10 +182,18 @@
             this.Name = "Main";
             this.Text = "Form1";
             ((System.ComponentModel.ISupportInitialize)(this.comboDropDown1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.stBar)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.stBarTail)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.statusBarAdv1)).EndInit();
+            this.statusBarAdv1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.stBarDb)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
         }
+
+        private System.Windows.Forms.Button btnToggleDbService;
+        private Syncfusion.Windows.Forms.Tools.StatusBarAdvPanel stBarDb;
+
+        private Syncfusion.Windows.Forms.Tools.StatusBarAdv statusBarAdv1;
 
         private System.Windows.Forms.Button btnToggleTailThread;
 
@@ -150,7 +201,7 @@
 
         private System.Windows.Forms.Button btnOpenLog;
 
-        private Syncfusion.Windows.Forms.Tools.StatusBarAdvPanel stBar;
+        private Syncfusion.Windows.Forms.Tools.StatusBarAdvPanel stBarTail;
 
         private System.Windows.Forms.Label label4;
 

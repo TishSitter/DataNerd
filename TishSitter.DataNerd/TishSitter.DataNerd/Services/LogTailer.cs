@@ -1,7 +1,9 @@
 using System;
+using System.Collections.Concurrent;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
+using TishSitter.DataNerd.Database;
 using TishSitter.DataNerd.Events;
 
 namespace TishSitter.DataNerd.Services
@@ -9,14 +11,17 @@ namespace TishSitter.DataNerd.Services
     public class LogTailer
     {
         public bool ThreadRunning { get; set; }
-        public bool KillThread { get; set; }
+        private bool KillThread { get; set; }
         
-        public async void StartThread(string logFilePath)
+        private BlockingCollection<DbQueueObj> commandQueue;
+        
+        public async void StartThread(string logFilePath, BlockingCollection<DbQueueObj> commandQueue)
         {
             try
-            {
+            {              
                 KillThread = false;
                 Console.WriteLine("Starting LogFile Watcher thread.");
+                this.commandQueue = commandQueue;
                 await Task.Run(() => LogTailerThread(logFilePath));
             }
             catch (Exception ex)
@@ -31,7 +36,7 @@ namespace TishSitter.DataNerd.Services
             KillThread = true;
         }
         
-        public void LogTailerThread(string logFilePath)
+        private void LogTailerThread(string logFilePath)
         {
             ThreadRunning = true;
             using (var reader =
@@ -40,16 +45,8 @@ namespace TishSitter.DataNerd.Services
                 //start at the end of the file
                 long lastMaxOffset = reader.BaseStream.Length;
                 Console.WriteLine($"LogFile Watcher initialised. LastMaxOffset: {lastMaxOffset}");
-                while (true)
+                while (!KillThread)
                 {
-                    if (KillThread)
-                    {
-                        // kill the thread
-                        Console.WriteLine("Killing LogFile Watcher thread.");
-                        ThreadRunning = false;
-                        return;
-                    }
-
                     //if the file size has not changed, idle
                     if (reader.BaseStream.Length == lastMaxOffset)
                         continue;
@@ -64,13 +61,17 @@ namespace TishSitter.DataNerd.Services
                         // do shit
                         if (line.Contains("LogValeriaFishing: StartFishingAt"))
                         {
-                            FishEvents.LogLootGenerated(line);
+                            FishEvents.LogLootGenerated(line, commandQueue);
                         }
 
                         // update the last max offset
                         lastMaxOffset = reader.BaseStream.Position;
                     }
                 }
+                // kill the thread
+                Console.WriteLine("Killing LogFile Watcher thread.");
+                ThreadRunning = false;
+                return;
             }
         }
     }
